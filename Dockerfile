@@ -15,5 +15,7 @@ COPY . .
 
 # Build the application
 RUN go build -o paccot .
+# Expose port 8080
+EXPOSE 8080
 # Command to run the executable
 CMD ["./paccot"]

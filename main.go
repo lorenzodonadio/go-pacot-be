@@ -28,6 +28,6 @@ func main() {
 	// Serve static files from the "src" directory
 	SetupRoutes(r)
 
-	fmt.Println("Server running on port :3243")
-	http.ListenAndServe(":3243", r)
+	fmt.Println("Server running on port :8080")
+	http.ListenAndServe(":8080", r)
 }
