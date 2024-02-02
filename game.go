@@ -327,7 +327,6 @@ func (gpr *GamePlayerRegistry) GetPlayersInGame(gameID string) []PlayerConn {
 
 	return gpr.GamePlayers[gameID]
 }
-
 func (gpr *GamePlayerRegistry) RemovePlayerFromGame(gameID string, playerName string) {
 	gpr.mu.Lock()
 	defer gpr.mu.Unlock()
@@ -335,23 +334,26 @@ func (gpr *GamePlayerRegistry) RemovePlayerFromGame(gameID string, playerName st
 	// Get the slice of players for the specified game
 	players := gpr.GamePlayers[gameID]
 
-	// Find the index of the player to remove
-	indexToRemove := -1
-	for i, p := range players {
-		if p.PlayerName == playerName {
-			indexToRemove = i
+	// Iterate over the players to find the one to remove
+	for i := 0; i < len(players); i++ {
+		if players[i].PlayerName == playerName {
+			// Close the WebSocket connection if it's not nil and open
+			if players[i].Conn != nil {
+				err := players[i].Conn.Close()
+				if err != nil {
+					fmt.Printf("Error closing WebSocket connection for %s: %s\n", playerName, err)
+				}
+			}
+
+			// Remove the player from the slice while preserving the order
+			players = append(players[:i], players[i+1:]...)
+
+			// Update the player slice for the game
+			gpr.GamePlayers[gameID] = players
+
+			// Since we've removed the player, break out of the loop
 			break
 		}
-	}
-
-	// If the player was found, remove them from the slice
-	if indexToRemove != -1 {
-		// Remove the player from the slice by swapping with the last player
-		players[indexToRemove] = players[len(players)-1]
-		players = players[:len(players)-1]
-
-		// Update the player slice for the game
-		gpr.GamePlayers[gameID] = players
 	}
 }
 

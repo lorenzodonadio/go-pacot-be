@@ -1,0 +1,5 @@
+{
+  "containerApps.deployWorkspaceProject.containerAppResourceGroupName": "OpenversumApp",
+  "containerApps.deployWorkspaceProject.containerAppName": "go-pacot-be",
+  "containerApps.deployWorkspaceProject.containerRegistryName": "gopacotbed0ac63"
+}

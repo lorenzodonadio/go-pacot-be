@@ -14,7 +14,7 @@ func UseMiddleware(r *chi.Mux) {
 	r.Use(cors.Handler(cors.Options{
 		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
 		// AllowedOrigins: []string{"http://localhost:5173"},
-		AllowedOrigins: []string{"https://*", "http://*"},
+		AllowedOrigins: []string{"https://paco-dun.vercel.app", "https://paco-lorenzodonadio.vercel.app"},
 		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "Location"},
